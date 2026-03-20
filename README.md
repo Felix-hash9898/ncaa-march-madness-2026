@@ -1,5 +1,7 @@
 # NCAA March Madness 2026 — Win Probability Prediction
 
+**Authors**: [Xinwei Huang](https://github.com/Felix-hash9898) · Haoran Zhang
+
 **Kaggle Competition**: [March Machine Learning Mania 2026](https://www.kaggle.com/competitions/march-machine-learning-mania-2026)  
 **Metric**: Brier Score (MSE of predicted win probabilities, lower is better)  
 **Final CV Brier**: **0.1579** — 36.8% improvement over naive baseline (0.25), 10.8% over seed-only (0.1770)
@@ -260,7 +262,9 @@ matplotlib
 seaborn
 ```
 
+---
+
 ## Contributors
 
-- [Felix Huang](https://github.com/Felix-hash9898)
+- [Xinwei Huang](https://github.com/Felix-hash9898)
 - Haoran Zhang
