@@ -1,0 +1,64 @@
+Round,Region,TeamA,TeamB,P(A wins),Winner
+R64,W,Duke,Siena,0.979,Duke
+R64,W,Ohio St,TCU,0.567,Ohio St
+R64,W,St John's,Northern Iowa,0.85,St John's
+R64,W,Kansas,Cal Baptist,0.88,Kansas
+R64,W,Louisville,South Florida,0.621,Louisville
+R64,W,Michigan St,N Dakota St,0.892,Michigan St
+R64,W,UCLA,UCF,0.687,UCLA
+R64,W,Connecticut,Furman,0.9,Connecticut
+R32,W,Duke,Ohio St,0.918,Duke
+R32,W,St John's,Kansas,0.568,St John's
+R32,W,Louisville,Michigan St,0.356,Michigan St
+R32,W,UCLA,Connecticut,0.315,Connecticut
+S16,W,Duke,St John's,0.739,Duke
+S16,W,Michigan St,Connecticut,0.501,Michigan St
+E8,W,Duke,Michigan St,0.768,Duke
+R64,X,Florida,Prairie View,0.979,Florida
+R64,X,Clemson,Iowa,0.475,Iowa
+R64,X,Vanderbilt,McNeese St,0.853,Vanderbilt
+R64,X,Nebraska,Troy,0.795,Nebraska
+R64,X,North Carolina,VCU,0.678,North Carolina
+R64,X,Illinois,Penn,0.918,Illinois
+R64,X,St Mary's CA,Texas A&M,0.673,St Mary's CA
+R64,X,Houston,Idaho,0.966,Houston
+R32,X,Florida,Iowa,0.797,Florida
+R32,X,Vanderbilt,Nebraska,0.515,Vanderbilt
+R32,X,North Carolina,Illinois,0.325,Illinois
+R32,X,St Mary's CA,Houston,0.304,Houston
+S16,X,Florida,Vanderbilt,0.697,Florida
+S16,X,Illinois,Houston,0.531,Illinois
+E8,X,Florida,Illinois,0.525,Florida
+R64,Y,Michigan,UMBC,0.974,Michigan
+R64,Y,Georgia,St Louis,0.527,Georgia
+R64,Y,Texas Tech,Akron,0.553,Texas Tech
+R64,Y,Alabama,Hofstra,0.857,Alabama
+R64,Y,Tennessee,SMU,0.758,Tennessee
+R64,Y,Virginia,Wright St,0.899,Virginia
+R64,Y,Kentucky,Santa Clara,0.63,Kentucky
+R64,Y,Iowa St,Tennessee St,0.95,Iowa St
+R32,Y,Michigan,Georgia,0.874,Michigan
+R32,Y,Texas Tech,Alabama,0.459,Alabama
+R32,Y,Tennessee,Virginia,0.413,Virginia
+R32,Y,Kentucky,Iowa St,0.298,Iowa St
+S16,Y,Michigan,Alabama,0.762,Michigan
+S16,Y,Virginia,Iowa St,0.287,Iowa St
+E8,Y,Michigan,Iowa St,0.668,Michigan
+R64,Z,Arizona,LIU Brooklyn,0.977,Arizona
+R64,Z,Villanova,Utah St,0.503,Villanova
+R64,Z,Wisconsin,High Point,0.777,Wisconsin
+R64,Z,Arkansas,Hawaii,0.881,Arkansas
+R64,Z,BYU,Texas,0.688,BYU
+R64,Z,Gonzaga,Kennesaw,0.943,Gonzaga
+R64,Z,Miami FL,Missouri,0.581,Miami FL
+R64,Z,Purdue,Queens NC,0.928,Purdue
+R32,Z,Arizona,Villanova,0.914,Arizona
+R32,Z,Wisconsin,Arkansas,0.524,Wisconsin
+R32,Z,BYU,Gonzaga,0.391,Gonzaga
+R32,Z,Miami FL,Purdue,0.235,Purdue
+S16,Z,Arizona,Wisconsin,0.833,Arizona
+S16,Z,Gonzaga,Purdue,0.452,Purdue
+E8,Z,Arizona,Purdue,0.598,Arizona
+F4,Final Four,Duke,Florida,0.514,Duke
+F4,Final Four,Michigan,Arizona,0.474,Arizona
+Championship,National,Duke,Arizona,0.442,Arizona

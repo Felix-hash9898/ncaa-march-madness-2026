@@ -1,0 +1,64 @@
+Round,Region,TeamA,TeamB,P(A wins),Winner
+R64,W,Connecticut,UT San Antonio,0.99,Connecticut
+R64,W,Iowa St,Syracuse,0.763,Iowa St
+R64,W,Maryland,Murray St,0.972,Maryland
+R64,W,North Carolina,W Illinois,0.981,North Carolina
+R64,W,Notre Dame,Fairfield,0.728,Notre Dame
+R64,W,Ohio St,Howard,0.99,Ohio St
+R64,W,Illinois,Colorado,0.559,Illinois
+R64,W,Vanderbilt,High Point,0.99,Vanderbilt
+R32,W,Connecticut,Iowa St,0.96,Connecticut
+R32,W,Maryland,North Carolina,0.509,Maryland
+R32,W,Notre Dame,Ohio St,0.378,Ohio St
+R32,W,Illinois,Vanderbilt,0.192,Vanderbilt
+S16,W,Connecticut,Maryland,0.903,Connecticut
+S16,W,Ohio St,Vanderbilt,0.61,Ohio St
+E8,W,Connecticut,Ohio St,0.898,Connecticut
+R64,X,South Carolina,Southern Univ,0.99,South Carolina
+R64,X,Clemson,USC,0.162,USC
+R64,X,Michigan St,Colorado St,0.835,Michigan St
+R64,X,Oklahoma,Idaho,0.988,Oklahoma
+R64,X,Washington,S Dakota St,0.702,Washington
+R64,X,TCU,UC San Diego,0.99,TCU
+R64,X,Georgia,Virginia,0.499,Virginia
+R64,X,Iowa,F Dickinson,0.99,Iowa
+R32,X,South Carolina,USC,0.97,South Carolina
+R32,X,Michigan St,Oklahoma,0.575,Michigan St
+R32,X,Washington,TCU,0.137,TCU
+R32,X,Virginia,Iowa,0.124,Iowa
+S16,X,South Carolina,Michigan St,0.963,South Carolina
+S16,X,TCU,Iowa,0.342,Iowa
+E8,X,South Carolina,Iowa,0.709,South Carolina
+R64,Y,Texas,SF Austin,0.99,Texas
+R64,Y,Oregon,Virginia Tech,0.73,Oregon
+R64,Y,Kentucky,James Madison,0.91,Kentucky
+R64,Y,West Virginia,Miami OH,0.987,West Virginia
+R64,Y,Alabama,Rhode Island,0.883,Alabama
+R64,Y,Louisville,Vermont,0.973,Louisville
+R64,Y,NC State,Tennessee,0.668,NC State
+R64,Y,Michigan,Holy Cross,0.99,Michigan
+R32,Y,Texas,Oregon,0.967,Texas
+R32,Y,Kentucky,West Virginia,0.317,West Virginia
+R32,Y,Alabama,Louisville,0.226,Louisville
+R32,Y,NC State,Michigan,0.121,Michigan
+S16,Y,Texas,West Virginia,0.885,Texas
+S16,Y,Louisville,Michigan,0.607,Louisville
+E8,Y,Texas,Louisville,0.798,Texas
+R64,Z,UCLA,Cal Baptist,0.99,UCLA
+R64,Z,Oklahoma St,Princeton,0.674,Oklahoma St
+R64,Z,Mississippi,Gonzaga,0.87,Mississippi
+R64,Z,Minnesota,WI Green Bay,0.957,Minnesota
+R64,Z,Baylor,Richmond,0.868,Baylor
+R64,Z,Duke,Col Charleston,0.99,Duke
+R64,Z,Texas Tech,Villanova,0.418,Villanova
+R64,Z,LSU,Jacksonville,0.99,LSU
+R32,Z,UCLA,Oklahoma St,0.952,UCLA
+R32,Z,Mississippi,Minnesota,0.456,Minnesota
+R32,Z,Baylor,Duke,0.406,Duke
+R32,Z,Villanova,LSU,0.042,LSU
+S16,Z,UCLA,Minnesota,0.942,UCLA
+S16,Z,Duke,LSU,0.309,LSU
+E8,Z,UCLA,LSU,0.821,UCLA
+F4,Final Four,Connecticut,South Carolina,0.552,Connecticut
+F4,Final Four,Texas,UCLA,0.491,UCLA
+Championship,National,Connecticut,UCLA,0.506,Connecticut
