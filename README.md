@@ -259,3 +259,8 @@ scipy
 matplotlib
 seaborn
 ```
+
+## Contributors
+
+- [Felix Huang](https://github.com/Felix-hash9898)
+- Haoran Zhang
