@@ -17,10 +17,10 @@ html, body, [class*="css"], .stApp,
 .stApp > div, [data-testid="stAppViewContainer"],
 [data-testid="stMain"], [data-testid="block-container"] {
     font-family: 'Inter', sans-serif !important;
-    background-color: #0d0d0d !important;
-    color: #f0f0f0 !important;
+    background-color: #f5f5f5 !important;
+    color: #0d0d0d !important;
 }
-.stApp { background-color: #0d0d0d !important; }
+.stApp { background-color: #f5f5f5 !important; }
 [data-testid="stHeader"], [data-testid="stToolbar"],
 .stDeployButton, header { display: none !important; }
 #MainMenu { visibility: hidden !important; }
@@ -36,7 +36,7 @@ footer    { visibility: hidden !important; }
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1.6rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #0d0d0d;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     margin-bottom: 0.1rem;
@@ -44,7 +44,7 @@ footer    { visibility: hidden !important; }
 }
 .page-sub {
     font-size: 0.68rem;
-    color: #555555;
+    color: #888888;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-bottom: 2.5rem;
@@ -58,17 +58,17 @@ footer    { visibility: hidden !important; }
     letter-spacing: 0.08em !important;
     text-transform: uppercase !important;
     padding: 0.3rem 1.1rem !important;
-    border: 1px solid #2a2a2a !important;
+    border: 1px solid #dddddd !important;
     transition: all 0.15s !important;
 }
 .stButton > button[kind="primary"] {
-    background: #f0f0f0 !important;
+    background: #0d0d0d !important;
     color: #0d0d0d !important;
-    border-color: #f0f0f0 !important;
+    border-color: #0d0d0d !important;
 }
 .stButton > button[kind="secondary"] {
     background: transparent !important;
-    color: #555555 !important;
+    color: #999999 !important;
 }
 
 /* Labels */
@@ -77,21 +77,21 @@ label {
     font-weight: 600 !important;
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
-    color: #444444 !important;
+    color: #999999 !important;
 }
 
 /* Selectboxes */
 .stSelectbox > div > div {
-    background-color: #181818 !important;
-    border: 1px solid #2a2a2a !important;
+    background-color: #ffffff !important;
+    border: 1px solid #dddddd !important;
     border-radius: 4px !important;
-    color: #f0f0f0 !important;
+    color: #0d0d0d !important;
     font-size: 0.88rem !important;
 }
 
 .divider {
     border: none;
-    border-top: 1px solid #1e1e1e;
+    border-top: 1px solid #e0e0e0;
     margin: 1.5rem 0;
 }
 
@@ -112,12 +112,12 @@ label {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-top: 0.4rem;
-    color: #666666;
+    color: #aaaaaa;
 }
 
 .info-text {
     font-size: 0.65rem;
-    color: #444444;
+    color: #999999;
     line-height: 1.8;
     text-align: center;
     margin-top: 1.5rem;
@@ -126,7 +126,7 @@ label {
 .footer-text {
     text-align: center;
     font-size: 0.62rem;
-    color: #333333;
+    color: #bbbbbb;
     margin-top: 1.5rem;
     letter-spacing: 0.05em;
 }
@@ -203,7 +203,7 @@ def make_espn_donut(prob_a, prob_b, color_a="#2563eb", color_b="#e11d48"):
             x=[r_in * np.cos(a), r_out * np.cos(a)],
             y=[r_in * np.sin(a), r_out * np.sin(a)],
             mode="lines",
-            line=dict(color="#0d0d0d", width=4),
+            line=dict(color="#f5f5f5", width=4),
             hoverinfo="skip", showlegend=False,
         ))
 
