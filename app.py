@@ -228,8 +228,8 @@ if prob_a is None:
     st.stop()
 
 prob_b  = 1 - prob_a
-COLOR_A = "#2563eb"
-COLOR_B = "#e11d48"
+COLOR_A = "#111111"
+COLOR_B = "#888888"
 
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
