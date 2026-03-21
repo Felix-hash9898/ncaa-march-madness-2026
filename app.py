@@ -12,22 +12,39 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-    background-color: #ffffff;
-    color: #111111;
+/* Force light mode regardless of system preference */
+:root {
+    color-scheme: light only;
+}
+
+html, body, [class*="css"], .stApp {
+    font-family: 'Inter', sans-serif !important;
+    background-color: #ffffff !important;
+    color: #111111 !important;
+}
+
+.stApp {
+    background-color: #ffffff !important;
+}
+
+section[data-testid="stSidebar"] {
+    background-color: #ffffff !important;
 }
 
 .block-container {
     max-width: 640px;
     padding-top: 3rem;
     padding-bottom: 4rem;
+    background-color: #ffffff !important;
+}
+
+h1, h2, h3, p {
+    color: #111111 !important;
 }
 
 h1 {
     font-size: 1.25rem !important;
     font-weight: 600 !important;
-    color: #111111 !important;
     letter-spacing: -0.01em;
     margin-bottom: 0.25rem !important;
 }
@@ -38,7 +55,7 @@ h1 {
     margin-bottom: 2.5rem;
 }
 
-label {
+label, .stRadio label {
     font-size: 0.7rem !important;
     font-weight: 500 !important;
     letter-spacing: 0.08em !important;
@@ -51,84 +68,68 @@ label {
     border: 1px solid #e8e8e8 !important;
     border-radius: 6px !important;
     color: #111111 !important;
-    font-size: 0.9rem !important;
-}
-
-.stRadio > div {
-    gap: 0.5rem;
-}
-.stRadio > div > label {
-    background: #f7f7f7 !important;
-    border: 1px solid #e8e8e8 !important;
-    border-radius: 6px !important;
-    padding: 0.4rem 1rem !important;
-    color: #111111 !important;
-    font-size: 0.82rem !important;
-    letter-spacing: 0.02em !important;
-    text-transform: none !important;
 }
 
 hr {
     border: none;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #eeeeee;
     margin: 1.5rem 0;
-}
-
-.result-wrap {
-    margin-top: 2rem;
 }
 
 .result-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid #eeeeee;
 }
 
 .result-row:first-child {
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #eeeeee;
 }
 
-.team-label {
+.t-name {
     font-size: 0.95rem;
     font-weight: 500;
     color: #111111;
 }
 
-.team-label.loser {
-    color: #bbbbbb;
+.t-name-dim {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #cccccc;
 }
 
-.prob-val {
-    font-size: 1.1rem;
+.t-prob {
+    font-size: 1.05rem;
     font-weight: 600;
     color: #111111;
 }
 
-.prob-val.loser {
-    color: #bbbbbb;
+.t-prob-dim {
+    font-size: 1.05rem;
     font-weight: 400;
+    color: #cccccc;
 }
 
-.winner-tag {
+.tag {
     display: inline-block;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #111111;
+    color: #555555;
     background: #f0f0f0;
     border-radius: 4px;
-    padding: 0.15rem 0.5rem;
+    padding: 0.12rem 0.45rem;
     margin-left: 0.6rem;
     vertical-align: middle;
 }
 
 .bar-wrap {
-    margin: 1.5rem 0;
+    margin: 1.25rem 0 2rem 0;
     height: 2px;
-    background: #f0f0f0;
+    background: #eeeeee;
     border-radius: 2px;
     overflow: hidden;
 }
@@ -139,14 +140,13 @@ hr {
     border-radius: 2px;
 }
 
-.info {
+.info-text {
     font-size: 0.75rem;
     color: #aaaaaa;
     line-height: 1.7;
-    margin-top: 2rem;
 }
 
-.footer {
+.footer-text {
     text-align: center;
     font-size: 0.7rem;
     color: #cccccc;
@@ -229,27 +229,31 @@ if prob_a is None:
 prob_b = 1 - prob_a
 a_wins = prob_a >= prob_b
 
+# Build HTML safely without f-string class interpolation issues
+a_name_class  = "t-name"    if a_wins  else "t-name-dim"
+b_name_class  = "t-name-dim" if a_wins else "t-name"
+a_prob_class  = "t-prob"    if a_wins  else "t-prob-dim"
+b_prob_class  = "t-prob-dim" if a_wins else "t-prob"
+a_tag = '<span class="tag">Favored</span>' if a_wins  else ""
+b_tag = '<span class="tag">Favored</span>' if not a_wins else ""
+
 st.markdown(f"""
-<div class="result-wrap">
-    <div class="result-row">
-        <span class="team-label {'loser' if not a_wins else ''}">
-            {a_name}{'<span class="winner-tag">Favored</span>' if a_wins else ''}
-        </span>
-        <span class="prob-val {'loser' if not a_wins else ''}">{prob_a*100:.1f}%</span>
-    </div>
-    <div class="result-row">
-        <span class="team-label {'loser' if a_wins else ''}">
-            {b_name}{'<span class="winner-tag">Favored</span>' if not a_wins else ''}
-        </span>
-        <span class="prob-val {'loser' if a_wins else ''}">{prob_b*100:.1f}%</span>
-    </div>
-</div>
-<div class="bar-wrap">
+<div>
+  <div class="result-row">
+    <span class="{a_name_class}">{a_name}{a_tag}</span>
+    <span class="{a_prob_class}">{prob_a*100:.1f}%</span>
+  </div>
+  <div class="result-row">
+    <span class="{b_name_class}">{b_name}{b_tag}</span>
+    <span class="{b_prob_class}">{prob_b*100:.1f}%</span>
+  </div>
+  <div class="bar-wrap">
     <div class="bar-fill" style="width:{prob_a*100:.1f}%"></div>
-</div>
-<p class="info">
+  </div>
+  <p class="info-text">
     Gender-specific LightGBM + CatBoost ensemble trained on NCAA tournament data 2003–2025.
     Features: Elo ratings, seed, strength of schedule, Four Factors, Massey Ordinals.
-</p>
-<p class="footer">Xinwei Huang · Haoran Zhang</p>
+  </p>
+  <p class="footer-text">Xinwei Huang · Haoran Zhang</p>
+</div>
 """, unsafe_allow_html=True)
