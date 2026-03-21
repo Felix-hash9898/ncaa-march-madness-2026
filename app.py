@@ -63,7 +63,7 @@ footer    { visibility: hidden !important; }
 }
 .stButton > button[kind="primary"] {
     background: #0d0d0d !important;
-    color: #0d0d0d !important;
+    color: #ffffff !important;
     border-color: #0d0d0d !important;
 }
 .stButton > button[kind="secondary"] {
