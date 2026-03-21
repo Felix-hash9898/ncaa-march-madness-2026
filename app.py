@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly.graph_objects as go
 
 st.set_page_config(
     page_title="NCAA 2026",
@@ -10,176 +11,120 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 html, body, [class*="css"], .stApp {
     font-family: 'Inter', sans-serif !important;
-    background-color: #fafafa !important;
+    background-color: #ffffff !important;
     color: #111111 !important;
 }
-
-.stApp { background-color: #fafafa !important; }
-
+.stApp { background-color: #ffffff !important; }
 .block-container {
-    max-width: 680px;
+    max-width: 660px;
     padding-top: 2.5rem;
     padding-bottom: 4rem;
-    background-color: #fafafa !important;
+    background-color: #ffffff !important;
 }
 
-/* Header */
 .page-title {
     font-size: 1.1rem;
     font-weight: 600;
     color: #111111;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.15rem;
 }
 .page-sub {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: #aaaaaa;
-    letter-spacing: 0.04em;
-    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.8rem;
 }
 
-/* Gender toggle */
-.gender-row {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-.g-btn {
-    padding: 0.35rem 1rem;
-    border-radius: 20px;
-    font-size: 0.78rem;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1.5px solid #e0e0e0;
-    background: #ffffff;
-    color: #555555;
-    transition: all 0.15s;
-    text-decoration: none;
-}
-.g-btn.active {
-    background: #111111;
-    color: #ffffff;
-    border-color: #111111;
-}
-
-/* Selects */
 label {
-    font-size: 0.68rem !important;
+    font-size: 0.67rem !important;
     font-weight: 600 !important;
     letter-spacing: 0.09em !important;
     text-transform: uppercase !important;
     color: #aaaaaa !important;
 }
+
 .stSelectbox > div > div {
-    background-color: #ffffff !important;
+    background-color: #f8f8f8 !important;
     border: 1.5px solid #e8e8e8 !important;
     border-radius: 8px !important;
     color: #111111 !important;
-    font-size: 0.88rem !important;
-}
-.stSelectbox > div > div:focus-within {
-    border-color: #111111 !important;
-    box-shadow: none !important;
 }
 
-/* Divider */
 .divider {
     border: none;
-    border-top: 1px solid #ebebeb;
-    margin: 1.5rem 0;
+    border-top: 1px solid #efefef;
+    margin: 1.25rem 0;
 }
 
-/* Result section */
-.result-section {
+.result-card {
     background: #ffffff;
     border: 1.5px solid #ebebeb;
     border-radius: 14px;
-    padding: 2rem 2rem 1.5rem 2rem;
-    margin-top: 1.5rem;
+    padding: 1.5rem 1.75rem;
+    margin-top: 1.25rem;
 }
 
-/* Circles row */
-.circles-row {
+.team-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 1.75rem;
+    justify-content: space-between;
+    padding: 0.55rem 0;
+    border-top: 1px solid #f3f3f3;
 }
 
-.circle-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.circle-name {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #111111;
-    text-align: center;
-    max-width: 120px;
-    line-height: 1.3;
-}
-
-.circle-name.dim {
-    color: #cccccc;
-    font-weight: 400;
-}
-
-.vs-label {
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #cccccc;
-    letter-spacing: 0.1em;
-    margin-top: -0.5rem;
-}
-
-/* Tag */
-.favored-tag {
+.dot {
     display: inline-block;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #ffffff;
-    background: #111111;
-    border-radius: 20px;
-    padding: 0.15rem 0.5rem;
-    margin-left: 0.4rem;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 7px;
     vertical-align: middle;
 }
 
-/* Bottom rows */
-.stat-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6rem 0;
-    border-top: 1px solid #f2f2f2;
+.t-name { font-size: 0.85rem; font-weight: 500; color: #111111; }
+.t-name-dim { font-size: 0.85rem; font-weight: 400; color: #cccccc; }
+.t-pct { font-size: 0.9rem; font-weight: 600; color: #111111; }
+.t-pct-dim { font-size: 0.9rem; font-weight: 400; color: #cccccc; }
+
+.fav-tag {
+    display: inline-block;
+    font-size: 0.58rem; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: #fff; background: #111111;
+    border-radius: 20px; padding: 0.1rem 0.45rem;
+    margin-left: 0.4rem; vertical-align: middle;
 }
-.stat-label { font-size: 0.78rem; color: #aaaaaa; }
-.stat-val   { font-size: 0.82rem; font-weight: 600; color: #111111; }
 
 .info-text {
-    font-size: 0.72rem;
-    color: #bbbbbb;
-    line-height: 1.7;
-    margin-top: 1.25rem;
-    padding-top: 1rem;
-    border-top: 1px solid #f2f2f2;
+    font-size: 0.7rem; color: #bbbbbb;
+    line-height: 1.7; margin-top: 1rem;
+    padding-top: 0.85rem; border-top: 1px solid #f3f3f3;
 }
 
 .footer-text {
-    text-align: center;
-    font-size: 0.68rem;
-    color: #cccccc;
-    margin-top: 2.5rem;
+    text-align: center; font-size: 0.67rem;
+    color: #cccccc; margin-top: 2.5rem;
+}
+
+/* Style the primary/secondary buttons better */
+.stButton > button {
+    border-radius: 20px !important;
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    padding: 0.3rem 1.1rem !important;
+    border: 1.5px solid #e0e0e0 !important;
+}
+.stButton > button[kind="primary"] {
+    background: #111111 !important;
+    color: #ffffff !important;
+    border-color: #111111 !important;
+}
+.stButton > button[kind="secondary"] {
+    background: #ffffff !important;
+    color: #555555 !important;
 }
 
 #MainMenu {visibility: hidden;}
@@ -208,7 +153,6 @@ def load_data():
 
     m_map = mteams[mteams["TeamID"].isin(m_ids)].set_index("TeamID")["TeamName"].to_dict()
     w_map = wteams[wteams["TeamID"].isin(w_ids)].set_index("TeamID")["TeamName"].to_dict()
-
     return lookup, m_map, w_map
 
 
@@ -220,90 +164,42 @@ def get_prob(lookup, a, b):
     return p if a == lo else 1 - p
 
 
-def make_ring_svg(prob_a, prob_b, name_a, name_b, color_a="#2563eb", color_b="#e11d48"):
-    """SVG ring chart: two arcs showing win probabilities."""
-    r = 52
-    cx, cy = 80, 80
-    stroke = 10
-    circumference = 2 * np.pi * r
+def make_donut(prob_a, prob_b, name_a, name_b):
+    COLOR_A = "#2563eb"
+    COLOR_B = "#e11d48"
 
-    # Arc lengths
-    arc_a = circumference * prob_a
-    arc_b = circumference * prob_b
-    gap = 3  # gap between arcs in px
+    # Shorten long names
+    def short(n): return n[:14] + "…" if len(n) > 14 else n
 
-    # Team A arc: starts at top (-90deg), goes clockwise
-    dash_a = f"{max(arc_a - gap, 0):.1f} {circumference:.1f}"
-    # Team B arc: starts where A ends
-    offset_b = -(arc_a)
-    dash_b = f"{max(arc_b - gap, 0):.1f} {circumference:.1f}"
-    rotate_b = 360 * prob_a
+    fig = go.Figure(go.Pie(
+        values=[prob_a, prob_b],
+        labels=[short(name_a), short(name_b)],
+        hole=0.68,
+        marker_colors=[COLOR_A, COLOR_B],
+        textinfo="none",
+        hovertemplate="%{label}: %{value:.1%}<extra></extra>",
+        sort=False,
+        direction="clockwise",
+        rotation=90,
+    ))
 
-    pct_a = f"{prob_a*100:.0f}%"
-    pct_b = f"{prob_b*100:.0f}%"
-
-    svg = f"""
-    <svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-      <style>
-        .arc-a {{
-          stroke-dasharray: {dash_a};
-          stroke-dashoffset: 0;
-          transform-origin: 80px 80px;
-          transform: rotate(-90deg);
-          animation: growA 0.9s cubic-bezier(0.4,0,0.2,1) forwards;
-        }}
-        .arc-b {{
-          stroke-dasharray: {dash_b};
-          stroke-dashoffset: 0;
-          transform-origin: 80px 80px;
-          transform: rotate({rotate_b - 90:.1f}deg);
-          animation: growB 0.9s cubic-bezier(0.4,0,0.2,1) forwards;
-        }}
-        @keyframes growA {{
-          from {{ stroke-dasharray: 0 {circumference:.1f}; }}
-          to   {{ stroke-dasharray: {dash_a}; }}
-        }}
-        @keyframes growB {{
-          from {{ stroke-dasharray: 0 {circumference:.1f}; }}
-          to   {{ stroke-dasharray: {dash_b}; }}
-        }}
-      </style>
-
-      <!-- Background track -->
-      <circle cx="{cx}" cy="{cy}" r="{r}"
-              fill="none" stroke="#f0f0f0" stroke-width="{stroke}"/>
-
-      <!-- Team A arc -->
-      <circle cx="{cx}" cy="{cy}" r="{r}"
-              fill="none" stroke="{color_a}" stroke-width="{stroke}"
-              stroke-linecap="round"
-              class="arc-a"/>
-
-      <!-- Team B arc -->
-      <circle cx="{cx}" cy="{cy}" r="{r}"
-              fill="none" stroke="{color_b}" stroke-width="{stroke}"
-              stroke-linecap="round"
-              class="arc-b"/>
-
-      <!-- Center text -->
-      <text x="{cx}" y="{cy - 6}" text-anchor="middle"
-            font-family="Inter, sans-serif" font-size="11" fill="#aaaaaa" font-weight="500"
-            letter-spacing="1">VS</text>
-
-      <!-- Color legend dots -->
-      <circle cx="{cx - 22}" cy="{cy + 18}" r="4" fill="{color_a}"/>
-      <text x="{cx - 14}" y="{cy + 22}" font-family="Inter, sans-serif"
-            font-size="9" fill="#aaaaaa">{pct_a}</text>
-
-      <circle cx="{cx + 8}" cy="{cy + 18}" r="4" fill="{color_b}"/>
-      <text x="{cx + 16}" y="{cy + 22}" font-family="Inter, sans-serif"
-            font-size="9" fill="#aaaaaa">{pct_b}</text>
-    </svg>
-    """
-    return svg
+    fig.update_layout(
+        showlegend=False,
+        margin=dict(l=0, r=0, t=0, b=0),
+        width=220, height=220,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        annotations=[dict(
+            text="VS",
+            x=0.5, y=0.5,
+            font=dict(size=13, color="#aaaaaa", family="Inter"),
+            showarrow=False,
+        )],
+    )
+    return fig
 
 
-# ── Header ────────────────────────────────────────────────────────────────────
+# ── Page ──────────────────────────────────────────────────────────────────────
 st.markdown('<p class="page-title">NCAA March Madness 2026</p>', unsafe_allow_html=True)
 st.markdown('<p class="page-sub">WIN PROBABILITY · LGB + CATBOOST ENSEMBLE · CV BRIER 0.1579</p>', unsafe_allow_html=True)
 
@@ -313,41 +209,42 @@ except FileNotFoundError as e:
     st.error(f"Missing file: {e}")
     st.stop()
 
-# ── Gender toggle (session state, no reset) ───────────────────────────────────
+# Gender toggle with session state
 if "gender" not in st.session_state:
     st.session_state.gender = "Men's"
+if "team_a_idx" not in st.session_state:
+    st.session_state.team_a_idx = 0
+if "team_b_idx" not in st.session_state:
+    st.session_state.team_b_idx = 1
 
-col_m, col_w, _ = st.columns([1.2, 1.2, 5])
+col_m, col_w, _ = st.columns([1.1, 1.3, 4])
 with col_m:
-    if st.button("Men's", use_container_width=True,
-                 type="primary" if st.session_state.gender == "Men's" else "secondary"):
+    if st.button("Men's",
+                 type="primary" if st.session_state.gender == "Men's" else "secondary",
+                 use_container_width=True):
         st.session_state.gender = "Men's"
+        st.rerun()
 with col_w:
-    if st.button("Women's", use_container_width=True,
-                 type="primary" if st.session_state.gender == "Women's" else "secondary"):
+    if st.button("Women's",
+                 type="primary" if st.session_state.gender == "Women's" else "secondary",
+                 use_container_width=True):
         st.session_state.gender = "Women's"
+        st.rerun()
 
 team_map = m_map if st.session_state.gender == "Men's" else w_map
 sorted_teams = sorted(team_map.items(), key=lambda x: x[1])
 name_to_id   = {name: tid for tid, name in sorted_teams}
 team_names   = [name for _, name in sorted_teams]
 
-# ── Team selectors ────────────────────────────────────────────────────────────
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
-
-# Preserve selections across gender switches using session state
-if "team_a_idx" not in st.session_state:
-    st.session_state.team_a_idx = 0
-if "team_b_idx" not in st.session_state:
-    st.session_state.team_b_idx = min(1, len(team_names) - 1)
 
 col1, col2 = st.columns(2)
 with col1:
-    a_name = st.selectbox("Team A", team_names,
-                          index=min(st.session_state.team_a_idx, len(team_names)-1))
+    a_idx = min(st.session_state.team_a_idx, len(team_names) - 1)
+    a_name = st.selectbox("Team A", team_names, index=a_idx)
 with col2:
-    b_name = st.selectbox("Team B", team_names,
-                          index=min(st.session_state.team_b_idx, len(team_names)-1))
+    b_idx = min(st.session_state.team_b_idx, len(team_names) - 1)
+    b_name = st.selectbox("Team B", team_names, index=b_idx)
 
 st.session_state.team_a_idx = team_names.index(a_name)
 st.session_state.team_b_idx = team_names.index(b_name)
@@ -357,7 +254,6 @@ if a_name == b_name:
     st.stop()
 
 prob_a = get_prob(lookup, name_to_id[a_name], name_to_id[b_name])
-
 if prob_a is None:
     st.error("Matchup not found in 2026 submission.")
     st.stop()
@@ -365,50 +261,36 @@ if prob_a is None:
 prob_b = 1 - prob_a
 a_wins = prob_a >= prob_b
 
-COLOR_A = "#2563eb"  # blue
-COLOR_B = "#e11d48"  # red
+# Donut chart centered
+col_left, col_center, col_right = st.columns([1, 2, 1])
+with col_center:
+    fig = make_donut(prob_a, prob_b, a_name, b_name)
+    st.plotly_chart(fig, use_container_width=False, config={"displayModeBar": False})
 
-# ── Result card ───────────────────────────────────────────────────────────────
-a_tag = '<span class="favored-tag">Favored</span>' if a_wins else ""
-b_tag = '<span class="favored-tag">Favored</span>' if not a_wins else ""
-a_dim = "" if a_wins else " dim"
-b_dim = "" if not a_wins else " dim"
-
-svg = make_ring_svg(prob_a, prob_b, a_name, b_name, COLOR_A, COLOR_B)
+# Result rows
+a_tag  = '<span class="fav-tag">Favored</span>' if a_wins else ""
+b_tag  = '<span class="fav-tag">Favored</span>' if not a_wins else ""
 
 st.markdown(f"""
-<div class="result-section">
-
-  <!-- Ring chart -->
-  <div style="display:flex;justify-content:center;margin-bottom:1.5rem;">
-    {svg}
-  </div>
-
-  <!-- Team rows -->
-  <div class="stat-row">
-    <span class="stat-label">
-      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;
-                   background:{COLOR_A};margin-right:6px;vertical-align:middle;"></span>
-      <span class="circle-name{a_dim}">{a_name}{a_tag}</span>
+<div class="result-card">
+  <div class="team-row">
+    <span>
+      <span class="dot" style="background:#2563eb"></span>
+      <span class="{'t-name' if a_wins else 't-name-dim'}">{a_name}{a_tag}</span>
     </span>
-    <span class="stat-val" style="color:{'#111111' if a_wins else '#cccccc'}">{prob_a*100:.1f}%</span>
+    <span class="{'t-pct' if a_wins else 't-pct-dim'}">{prob_a*100:.1f}%</span>
   </div>
-
-  <div class="stat-row">
-    <span class="stat-label">
-      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;
-                   background:{COLOR_B};margin-right:6px;vertical-align:middle;"></span>
-      <span class="circle-name{b_dim}">{b_name}{b_tag}</span>
+  <div class="team-row">
+    <span>
+      <span class="dot" style="background:#e11d48"></span>
+      <span class="{'t-name' if not a_wins else 't-name-dim'}">{b_name}{b_tag}</span>
     </span>
-    <span class="stat-val" style="color:{'#111111' if not a_wins else '#cccccc'}">{prob_b*100:.1f}%</span>
+    <span class="{'t-pct' if not a_wins else 't-pct-dim'}">{prob_b*100:.1f}%</span>
   </div>
-
   <p class="info-text">
     Gender-specific LightGBM + CatBoost ensemble · NCAA tournament data 2003–2025 ·
     Features: Elo, seed, SOS, Four Factors, Massey Ordinals
   </p>
-
 </div>
-
 <p class="footer-text">Xinwei Huang · Haoran Zhang</p>
 """, unsafe_allow_html=True)
