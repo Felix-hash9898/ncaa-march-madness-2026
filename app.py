@@ -285,6 +285,15 @@ with col2:
 st.session_state.team_a_idx = team_names.index(a_name)
 st.session_state.team_b_idx = team_names.index(b_name)
 
+# ESPN links
+a_query = a_name.replace(" ", "+")
+b_query = b_name.replace(" ", "+")
+col1b, col2b = st.columns(2)
+with col1b:
+    st.markdown(f'<a href="https://www.espn.com/search/_/q/{a_query}" target="_blank" style="font-size:0.65rem;color:#888888;text-decoration:none;letter-spacing:0.05em;">↗ View on ESPN</a>', unsafe_allow_html=True)
+with col2b:
+    st.markdown(f'<a href="https://www.espn.com/search/_/q/{b_query}" target="_blank" style="font-size:0.65rem;color:#888888;text-decoration:none;letter-spacing:0.05em;">↗ View on ESPN</a>', unsafe_allow_html=True)
+
 if a_name == b_name:
     st.warning("Select two different teams.")
     st.stop()
