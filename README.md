@@ -1,6 +1,7 @@
 # NCAA March Madness 2026 — Win Probability Prediction
 
-**Authors**: [Xinwei Huang](https://github.com/Felix-hash9898) · Haoran Zhang
+**Authors**: [Xinwei Huang](https://github.com/Felix-hash9898) · Haoran Zhang  
+**Live Demo**: [ncaa-mm-2026.streamlit.app](https://ncaa-mm-2026.streamlit.app)
 
 **Kaggle Competition**: [March Machine Learning Mania 2026](https://www.kaggle.com/competitions/march-machine-learning-mania-2026)  
 **Metric**: Brier Score (MSE of predicted win probabilities, lower is better)  
