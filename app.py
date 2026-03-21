@@ -13,7 +13,6 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Force white everywhere */
 html, body, [class*="css"], .stApp,
 .stApp > div, [data-testid="stAppViewContainer"],
 [data-testid="stMain"], [data-testid="block-container"] {
@@ -21,13 +20,10 @@ html, body, [class*="css"], .stApp,
     background-color: #ffffff !important;
     color: #111111 !important;
 }
+.stApp { background-color: #ffffff !important; }
 
-/* Hide Streamlit header/toolbar completely */
-[data-testid="stHeader"],
-[data-testid="stToolbar"],
-.stDeployButton,
-header { display: none !important; }
-
+[data-testid="stHeader"], [data-testid="stToolbar"],
+.stDeployButton, header { display: none !important; }
 #MainMenu { visibility: hidden !important; }
 footer    { visibility: hidden !important; }
 
@@ -37,7 +33,6 @@ footer    { visibility: hidden !important; }
     padding-bottom: 4rem;
 }
 
-/* Page title */
 .page-title {
     font-size: 0.72rem;
     font-weight: 700;
@@ -49,18 +44,16 @@ footer    { visibility: hidden !important; }
 .page-sub {
     font-size: 0.68rem;
     color: #bbbbbb;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     margin-bottom: 2rem;
 }
 
-/* Gender buttons */
 .stButton > button {
     border-radius: 20px !important;
     font-size: 0.76rem !important;
     font-weight: 500 !important;
     padding: 0.28rem 1rem !important;
     border: 1.5px solid #e0e0e0 !important;
-    transition: all 0.15s !important;
 }
 .stButton > button[kind="primary"] {
     background: #111111 !important;
@@ -72,7 +65,6 @@ footer    { visibility: hidden !important; }
     color: #666666 !important;
 }
 
-/* Labels */
 label {
     font-size: 0.65rem !important;
     font-weight: 600 !important;
@@ -80,8 +72,6 @@ label {
     text-transform: uppercase !important;
     color: #aaaaaa !important;
 }
-
-/* Selectboxes */
 .stSelectbox > div > div {
     background-color: #f8f8f8 !important;
     border: 1.5px solid #e8e8e8 !important;
@@ -96,66 +86,55 @@ label {
     margin: 1.25rem 0;
 }
 
-/* ESPN-style probability display */
-.espn-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
+.pct-left {
+    text-align: right;
+    padding-right: 0.5rem;
 }
-.espn-pct {
-    font-size: 2.4rem;
+.pct-right {
+    text-align: left;
+    padding-left: 0.5rem;
+}
+.pct-num {
+    font-size: 2.6rem;
     font-weight: 700;
     line-height: 1;
     color: #111111;
 }
-.espn-pct-dim {
-    font-size: 2.4rem;
+.pct-num-dim {
+    font-size: 2.6rem;
     font-weight: 700;
     line-height: 1;
-    color: #dddddd;
+    color: #e0e0e0;
 }
-.espn-name {
-    font-size: 0.72rem;
+.pct-name {
+    font-size: 0.68rem;
     font-weight: 600;
     color: #555555;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin-top: 0.3rem;
+    margin-top: 0.35rem;
 }
-.espn-name-dim {
-    font-size: 0.72rem;
+.pct-name-dim {
+    font-size: 0.68rem;
     font-weight: 500;
     color: #cccccc;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin-top: 0.3rem;
-}
-.side-left  { text-align: left; }
-.side-right { text-align: right; }
-
-.fav-dot {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #111111;
-    margin-right: 4px;
-    vertical-align: middle;
+    margin-top: 0.35rem;
 }
 
-/* Bottom info */
 .info-text {
     font-size: 0.68rem;
     color: #bbbbbb;
     line-height: 1.7;
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
 }
 .footer-text {
     text-align: center;
     font-size: 0.65rem;
     color: #cccccc;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -163,24 +142,23 @@ label {
 
 @st.cache_data
 def load_data():
-    sub     = pd.read_csv("submissions/stage2/submission_ensemble_v1.csv")
-    mteams  = pd.read_csv("data/MTeams.csv")[["TeamID", "TeamName"]]
-    wteams  = pd.read_csv("data/WTeams.csv")[["TeamID", "TeamName"]]
+    sub    = pd.read_csv("submissions/stage2/submission_ensemble_v1.csv")
+    mteams = pd.read_csv("data/MTeams.csv")[["TeamID", "TeamName"]]
+    wteams = pd.read_csv("data/WTeams.csv")[["TeamID", "TeamName"]]
 
-    parts       = sub["ID"].str.split("_", expand=True)
+    parts        = sub["ID"].str.split("_", expand=True)
     sub["Season"] = parts[0].astype(int)
     sub["TeamA"]  = parts[1].astype(int)
     sub["TeamB"]  = parts[2].astype(int)
 
     lookup  = dict(zip(zip(sub["TeamA"], sub["TeamB"]), sub["Pred"]))
-
     s26     = sub[sub["Season"] == 2026]
     all_ids = set(s26["TeamA"]) | set(s26["TeamB"])
     m_ids   = {t for t in all_ids if t < 2000}
     w_ids   = {t for t in all_ids if t >= 2000}
 
-    m_map   = mteams[mteams["TeamID"].isin(m_ids)].set_index("TeamID")["TeamName"].to_dict()
-    w_map   = wteams[wteams["TeamID"].isin(w_ids)].set_index("TeamID")["TeamName"].to_dict()
+    m_map = mteams[mteams["TeamID"].isin(m_ids)].set_index("TeamID")["TeamName"].to_dict()
+    w_map = wteams[wteams["TeamID"].isin(w_ids)].set_index("TeamID")["TeamName"].to_dict()
     return lookup, m_map, w_map
 
 
@@ -192,29 +170,76 @@ def get_prob(lookup, a, b):
     return p if a == lo else 1 - p
 
 
-def make_donut(prob_a, prob_b, color_a="#2563eb", color_b="#e11d48"):
-    fig = go.Figure(go.Pie(
+def make_espn_donut(prob_a, prob_b, name_a, name_b,
+                    color_a="#2563eb", color_b="#e11d48"):
+    """
+    ESPN-style ring:
+    - Starts at 12 o'clock
+    - Team A fills counterclockwise (left side)
+    - Team B fills clockwise (right side)
+    - Thin vertical line at center (50/50 marker)
+    - Team names flanking inside the ring
+    """
+    def short(n, k=11):
+        return n[:k] + "…" if len(n) > k else n
+
+    fig = go.Figure()
+
+    # Pie: counterclockwise from top → Team A goes left, Team B goes right
+    fig.add_trace(go.Pie(
         values=[prob_a, prob_b],
-        hole=0.72,
+        hole=0.65,
         marker_colors=[color_a, color_b],
+        marker=dict(line=dict(color="#ffffff", width=2)),
         textinfo="none",
         hovertemplate="%{value:.1%}<extra></extra>",
         sort=False,
-        direction="clockwise",
-        rotation=90,
+        direction="counterclockwise",
+        rotation=90,   # start at 12 o'clock
     ))
+
     fig.update_layout(
         showlegend=False,
         margin=dict(l=0, r=0, t=0, b=0),
-        width=180, height=180,
+        width=240, height=240,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        annotations=[dict(
-            text="VS",
-            x=0.5, y=0.5,
-            font=dict(size=12, color="#cccccc", family="Inter"),
-            showarrow=False,
-        )],
+        annotations=[
+            # Team A name — left inside ring
+            dict(
+                text=f"<b>{short(name_a)}</b>",
+                x=0.28, y=0.55,
+                font=dict(size=9, color=color_a, family="Inter"),
+                showarrow=False,
+                align="center",
+            ),
+            # Team B name — right inside ring
+            dict(
+                text=f"<b>{short(name_b)}</b>",
+                x=0.72, y=0.55,
+                font=dict(size=9, color=color_b, family="Inter"),
+                showarrow=False,
+                align="center",
+            ),
+        ],
+        shapes=[
+            # Vertical center line (50/50 indicator) — top half
+            dict(
+                type="line",
+                x0=0.5, y0=0.82,
+                x1=0.5, y1=0.93,
+                xref="paper", yref="paper",
+                line=dict(color="#dddddd", width=1.5),
+            ),
+            # Vertical center line — bottom half
+            dict(
+                type="line",
+                x0=0.5, y0=0.07,
+                x1=0.5, y1=0.18,
+                xref="paper", yref="paper",
+                line=dict(color="#dddddd", width=1.5),
+            ),
+        ],
     )
     return fig
 
@@ -229,12 +254,10 @@ except FileNotFoundError as e:
     st.error(f"Missing file: {e}")
     st.stop()
 
-# Session state
 for key, val in [("gender", "Men's"), ("team_a_idx", 0), ("team_b_idx", 1)]:
     if key not in st.session_state:
         st.session_state[key] = val
 
-# Gender toggle
 c1, c2, _ = st.columns([1.1, 1.3, 4.5])
 with c1:
     if st.button("Men's",
@@ -247,10 +270,10 @@ with c2:
                  use_container_width=True):
         st.session_state.gender = "Women's"; st.rerun()
 
-team_map    = m_map if st.session_state.gender == "Men's" else w_map
+team_map     = m_map if st.session_state.gender == "Men's" else w_map
 sorted_teams = sorted(team_map.items(), key=lambda x: x[1])
-name_to_id  = {n: tid for tid, n in sorted_teams}
-team_names  = [n for _, n in sorted_teams]
+name_to_id   = {n: tid for tid, n in sorted_teams}
+team_names   = [n for _, n in sorted_teams]
 
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
@@ -281,40 +304,30 @@ COLOR_B = "#e11d48"
 
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
-# ── ESPN layout: pct LEFT | donut CENTER | pct RIGHT ─────────────────────────
-col_l, col_c, col_r = st.columns([2, 2, 2])
+# ESPN layout: big % LEFT | donut CENTER | big % RIGHT
+col_l, col_c, col_r = st.columns([2, 2.2, 2])
 
-# Left side — Team A
 with col_l:
-    pct_class  = "espn-pct"     if a_wins else "espn-pct-dim"
-    name_class = "espn-name"    if a_wins else "espn-name-dim"
-    dot        = f'<span class="fav-dot" style="background:{COLOR_A}"></span>' if a_wins else \
-                 f'<span class="fav-dot" style="background:{COLOR_A};opacity:0.25"></span>'
+    pc = "pct-num" if a_wins else "pct-num-dim"
+    nc = "pct-name" if a_wins else "pct-name-dim"
     st.markdown(f"""
-    <div class="side-left">
-      <div class="{pct_class}" style="color:{'#111111' if a_wins else '#dddddd'}">{prob_a*100:.0f}%</div>
-      <div class="{name_class}">{dot}{a_name}</div>
-    </div>
-    """, unsafe_allow_html=True)
+    <div class="pct-left">
+      <div class="{pc}" style="color:{COLOR_A if a_wins else '#e0e0e0'}">{prob_a*100:.0f}%</div>
+      <div class="{nc}">{a_name}</div>
+    </div>""", unsafe_allow_html=True)
 
-# Center — donut
 with col_c:
-    fig = make_donut(prob_a, prob_b, COLOR_A, COLOR_B)
-    st.plotly_chart(fig, use_container_width=False,
-                    config={"displayModeBar": False})
+    fig = make_espn_donut(prob_a, prob_b, a_name, b_name, COLOR_A, COLOR_B)
+    st.plotly_chart(fig, use_container_width=False, config={"displayModeBar": False})
 
-# Right side — Team B
 with col_r:
-    pct_class  = "espn-pct"  if not a_wins else "espn-pct-dim"
-    name_class = "espn-name" if not a_wins else "espn-name-dim"
-    dot        = f'<span class="fav-dot" style="background:{COLOR_B}"></span>' if not a_wins else \
-                 f'<span class="fav-dot" style="background:{COLOR_B};opacity:0.25"></span>'
+    pc = "pct-num" if not a_wins else "pct-num-dim"
+    nc = "pct-name" if not a_wins else "pct-name-dim"
     st.markdown(f"""
-    <div class="side-right">
-      <div class="{pct_class}" style="color:{'#111111' if not a_wins else '#dddddd'}">{prob_b*100:.0f}%</div>
-      <div class="{name_class}">{b_name}{dot}</div>
-    </div>
-    """, unsafe_allow_html=True)
+    <div class="pct-right">
+      <div class="{pc}" style="color:{COLOR_B if not a_wins else '#e0e0e0'}">{prob_b*100:.0f}%</div>
+      <div class="{nc}">{b_name}</div>
+    </div>""", unsafe_allow_html=True)
 
 st.markdown("""
 <p class="info-text">
