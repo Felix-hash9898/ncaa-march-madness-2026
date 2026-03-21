@@ -89,6 +89,28 @@ label {
     font-size: 0.88rem !important;
 }
 
+/* Fix dropdown input text visibility */
+.stSelectbox input {
+    color: #0d0d0d !important;
+}
+div[data-baseweb="select"] * {
+    color: #0d0d0d !important;
+}
+div[data-baseweb="input"] input {
+    color: #0d0d0d !important;
+    background-color: #ffffff !important;
+}
+div[data-baseweb="popover"] {
+    background-color: #ffffff !important;
+}
+li[role="option"] {
+    color: #0d0d0d !important;
+    background-color: #ffffff !important;
+}
+li[role="option"]:hover {
+    background-color: #f0f0f0 !important;
+}
+
 .divider {
     border: none;
     border-top: 1px solid #e0e0e0;
@@ -284,7 +306,7 @@ with col_l:
     st.markdown(f"""
     <div class="pct-left">
       <div class="pct-num" style="color:{COLOR_A}">{prob_a*100:.0f}%</div>
-      <div class="pct-name">{a_name}</div>
+      <div class="pct-name" style="color:{COLOR_A}">{a_name}</div>
     </div>""", unsafe_allow_html=True)
 
 with col_c:
@@ -295,7 +317,7 @@ with col_r:
     st.markdown(f"""
     <div class="pct-right">
       <div class="pct-num" style="color:{COLOR_B}">{prob_b*100:.0f}%</div>
-      <div class="pct-name">{b_name}</div>
+      <div class="pct-name" style="color:{COLOR_B}">{b_name}</div>
     </div>""", unsafe_allow_html=True)
 
 st.markdown("""
