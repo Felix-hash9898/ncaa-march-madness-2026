@@ -11,62 +11,125 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');
 
 html, body, [class*="css"], .stApp,
 .stApp > div, [data-testid="stAppViewContainer"],
 [data-testid="stMain"], [data-testid="block-container"] {
     font-family: 'Inter', sans-serif !important;
-    background-color: #ffffff !important;
-    color: #111111 !important;
+    background-color: #0d0d0d !important;
+    color: #f0f0f0 !important;
 }
-.stApp { background-color: #ffffff !important; }
+.stApp { background-color: #0d0d0d !important; }
 [data-testid="stHeader"], [data-testid="stToolbar"],
 .stDeployButton, header { display: none !important; }
 #MainMenu { visibility: hidden !important; }
 footer    { visibility: hidden !important; }
 
 .block-container {
-    max-width: 680px;
-    padding-top: 2.5rem !important;
+    max-width: 700px;
+    padding-top: 3rem !important;
     padding-bottom: 4rem;
 }
+
 .page-title {
-    font-size: 0.72rem; font-weight: 700; color: #111111;
-    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.1rem;
+    line-height: 1.1;
 }
 .page-sub {
-    font-size: 0.68rem; color: #bbbbbb;
-    letter-spacing: 0.04em; margin-bottom: 2rem;
+    font-size: 0.68rem;
+    color: #555555;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
 }
+
+/* Gender toggle */
 .stButton > button {
-    border-radius: 20px !important; font-size: 0.76rem !important;
-    font-weight: 500 !important; padding: 0.28rem 1rem !important;
-    border: 1.5px solid #e0e0e0 !important;
+    border-radius: 4px !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    padding: 0.3rem 1.1rem !important;
+    border: 1px solid #2a2a2a !important;
+    transition: all 0.15s !important;
 }
 .stButton > button[kind="primary"] {
-    background: #111111 !important; color: #ffffff !important;
-    border-color: #111111 !important;
+    background: #f0f0f0 !important;
+    color: #0d0d0d !important;
+    border-color: #f0f0f0 !important;
 }
 .stButton > button[kind="secondary"] {
-    background: #ffffff !important; color: #666666 !important;
+    background: transparent !important;
+    color: #555555 !important;
 }
+
+/* Labels */
 label {
-    font-size: 0.65rem !important; font-weight: 600 !important;
-    letter-spacing: 0.1em !important; text-transform: uppercase !important;
-    color: #aaaaaa !important;
+    font-size: 0.62rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: #444444 !important;
 }
+
+/* Selectboxes */
 .stSelectbox > div > div {
-    background-color: #f8f8f8 !important; border: 1.5px solid #e8e8e8 !important;
-    border-radius: 8px !important; color: #111111 !important; font-size: 0.88rem !important;
+    background-color: #181818 !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 4px !important;
+    color: #f0f0f0 !important;
+    font-size: 0.88rem !important;
 }
-.divider { border: none; border-top: 1px solid #f0f0f0; margin: 1.25rem 0; }
-.pct-left  { text-align: right; padding-right: 0.75rem; }
-.pct-right { text-align: left;  padding-left:  0.75rem; }
-.pct-num  { font-size: 2.6rem; font-weight: 700; line-height: 1; }
-.pct-name { font-size: 0.67rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 0.35rem; }
-.info-text { font-size: 0.68rem; color: #bbbbbb; line-height: 1.7; text-align: center; margin-top: 1.25rem; }
-.footer-text { text-align: center; font-size: 0.65rem; color: #cccccc; margin-top: 1.5rem; }
+
+.divider {
+    border: none;
+    border-top: 1px solid #1e1e1e;
+    margin: 1.5rem 0;
+}
+
+/* Probability display */
+.pct-left  { text-align: right; padding-right: 0.5rem; }
+.pct-right { text-align: left;  padding-left:  0.5rem; }
+
+.pct-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+.pct-name {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+    color: #666666;
+}
+
+.info-text {
+    font-size: 0.65rem;
+    color: #444444;
+    line-height: 1.8;
+    text-align: center;
+    margin-top: 1.5rem;
+    letter-spacing: 0.02em;
+}
+.footer-text {
+    text-align: center;
+    font-size: 0.62rem;
+    color: #333333;
+    margin-top: 1.5rem;
+    letter-spacing: 0.05em;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -99,7 +162,6 @@ def get_prob(lookup, a, b):
 
 
 def ring_polygon(t_start_deg, t_end_deg, r_in, r_out, n=400):
-    """Filled ring arc polygon."""
     thetas = np.linspace(np.radians(t_start_deg), np.radians(t_end_deg), n)
     xo = r_out * np.cos(thetas)
     yo = r_out * np.sin(thetas)
@@ -109,43 +171,24 @@ def ring_polygon(t_start_deg, t_end_deg, r_in, r_out, n=400):
             np.concatenate([yo, yi, [yo[0]]]))
 
 
-def seam_line(angle_deg, r_in, r_out, gap_deg=1.8):
-    """Short white line across the ring at a given angle, with tiny angular gap."""
-    a = np.radians(angle_deg)
-    return (
-        [r_in * np.cos(a), r_out * np.cos(a)],
-        [r_in * np.sin(a), r_out * np.sin(a)],
-    )
-
-
 def make_espn_donut(prob_a, prob_b, color_a="#2563eb", color_b="#e11d48"):
-    r_out  = 1.0
-    r_in   = 0.62
-    seam   = 2.5   # degrees of white gap at each seam
-
-    # Team A: counterclockwise from 90° → occupies left side
-    # Team B: clockwise from 90° → occupies right side
-    # Strategy: draw full-circle B, then draw A arc on top.
-    # Seam gaps at 90° (12 o'clock) and at the bottom meeting point.
+    r_out = 1.0
+    r_in  = 0.62
+    seam  = 2.5
     deg_a = prob_a * 360
-    deg_b = prob_b * 360
-
-    # Bottom meeting angle: A ends at 90+deg_a, B ends at 90-deg_b
-    # Since deg_a+deg_b=360, these are the same point (90+deg_a = 90-deg_b mod 360)
-    bottom_deg = 90 + deg_a  # == 90 - deg_b
+    bottom_deg = 90 + deg_a
 
     fig = go.Figure()
 
-    # 1. Full ring in color_b (background)
-    xb, yb = ring_polygon(90 - deg_b - 1, 90 + 1, r_in, r_out, 600)
+    # Full ring in color_b
+    xb, yb = ring_polygon(90 - (prob_b * 360) - 1, 90 + 1, r_in, r_out, 600)
     fig.add_trace(go.Scatter(
         x=xb, y=yb, fill="toself", fillcolor=color_b,
         line=dict(color=color_b, width=0),
         hoverinfo="skip", showlegend=False,
     ))
 
-    # 2. Team A arc: counterclockwise from 90° to 90°+deg_a
-    #    with small seam gaps at both ends
+    # Team A arc on top
     xa, ya = ring_polygon(90 + seam, 90 + deg_a - seam, r_in, r_out, 400)
     fig.add_trace(go.Scatter(
         x=xa, y=ya, fill="toself", fillcolor=color_a,
@@ -153,12 +196,14 @@ def make_espn_donut(prob_a, prob_b, color_a="#2563eb", color_b="#e11d48"):
         hoverinfo="skip", showlegend=False,
     ))
 
-    # 3. White seam lines at 12 o'clock and bottom meeting point
+    # Seam lines at 12 o'clock and bottom
     for angle in [90, bottom_deg]:
-        sx, sy = seam_line(angle, r_in, r_out)
+        a = np.radians(angle)
         fig.add_trace(go.Scatter(
-            x=sx, y=sy, mode="lines",
-            line=dict(color="#ffffff", width=4),
+            x=[r_in * np.cos(a), r_out * np.cos(a)],
+            y=[r_in * np.sin(a), r_out * np.sin(a)],
+            mode="lines",
+            line=dict(color="#0d0d0d", width=4),
             hoverinfo="skip", showlegend=False,
         ))
 
@@ -176,7 +221,7 @@ def make_espn_donut(prob_a, prob_b, color_a="#2563eb", color_b="#e11d48"):
 
 # ── App ───────────────────────────────────────────────────────────────────────
 st.markdown('<p class="page-title">NCAA March Madness 2026</p>', unsafe_allow_html=True)
-st.markdown('<p class="page-sub">Win probability · LGB + CatBoost ensemble · CV Brier 0.1579</p>', unsafe_allow_html=True)
+st.markdown('<p class="page-sub">Win Probability · LGB + CatBoost Ensemble · CV Brier 0.1579</p>', unsafe_allow_html=True)
 
 try:
     lookup, m_map, w_map = load_data()
@@ -228,8 +273,8 @@ if prob_a is None:
     st.stop()
 
 prob_b  = 1 - prob_a
-COLOR_A = "#111111"
-COLOR_B = "#888888"
+COLOR_A = "#2563eb"
+COLOR_B = "#e11d48"
 
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
@@ -239,7 +284,7 @@ with col_l:
     st.markdown(f"""
     <div class="pct-left">
       <div class="pct-num" style="color:{COLOR_A}">{prob_a*100:.0f}%</div>
-      <div class="pct-name" style="color:#555">{a_name}</div>
+      <div class="pct-name">{a_name}</div>
     </div>""", unsafe_allow_html=True)
 
 with col_c:
@@ -250,13 +295,13 @@ with col_r:
     st.markdown(f"""
     <div class="pct-right">
       <div class="pct-num" style="color:{COLOR_B}">{prob_b*100:.0f}%</div>
-      <div class="pct-name" style="color:#555">{b_name}</div>
+      <div class="pct-name">{b_name}</div>
     </div>""", unsafe_allow_html=True)
 
 st.markdown("""
 <p class="info-text">
   Gender-specific LightGBM + CatBoost ensemble · NCAA tournament data 2003–2025<br>
-  Features: Elo, seed, SOS, Four Factors, Massey Ordinals
+  Features: Elo · Seed · Strength of Schedule · Four Factors · Massey Ordinals
 </p>
-<p class="footer-text">Xinwei Huang · Haoran Zhang</p>
+<p class="footer-text">XINWEI HUANG · HAORAN ZHANG</p>
 """, unsafe_allow_html=True)
